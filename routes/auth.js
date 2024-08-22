@@ -16,8 +16,7 @@ router.post('/createuser',[
     body('password').isLength({min:5})
     ],async (req,res)=>{
   let success = false;
-  // error if any thing is invalid
-  const result = validationResult(req); // return an array of errors stored in result
+  const result = validationResult(req);
     if (!result.isEmpty()) {
     return res.status(400).send({success,errors: result.array() });
     }
@@ -102,7 +101,7 @@ router.post('/login',[
   // ROUTER 3 : get logged in user details
   router.post('/getuser',fetchuser,async (req,res)=>{
   try {
-      userId = req.user.id;
+      const userId = req.user.id;
       const user = await User.findById(userId).select("-password"); 
       res.send(user);
     
